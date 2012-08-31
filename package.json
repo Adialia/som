@@ -1,0 +1,26 @@
+{
+	"name": "som",
+
+	"description": "Som is a self organizing map implementation written in JavaScript.",
+	"main": "./som",
+	"author": "Bediako George <bediako.george@lucidtechnics.com>",
+	"version": "0.1.0",
+	"maintainers": [
+		{
+			"name": "Bediako George",
+			"email": "bediako.george@lucidtechnics.com",
+			"web": "http://www.lucidtechnics.com"
+		}
+	],
+	"repository" : { "type" : "git" , "url" : "http://github.com/LucidTechnics/som.git" },
+	"bugs" : { "url" : "http://github.com/LucidTechnics/som/issues" },
+	"licenses" :[
+		{
+			"type" : "MIT",
+			"url" : "http://github.com/LucidTechnics/som/raw/master/LICENSE"
+		}
+	],
+	"dependencies": {
+		"underscore": ">= 1.3.3"
+	}
+}
