@@ -169,7 +169,8 @@ Som.prototype.train = function(_id, _vector)
 
 			for (var feature in _node.weights)
 			{
-				_node.weights[feature] = _node.weights[feature] + (influence * learningRate * (_vector[feature] - _node.weights[feature]));
+				var vectorFeature = _vector[feature]||0;
+				_node.weights[feature] = _node.weights[feature] + (influence * learningRate * (vectorFeature - _node.weights[feature]));
 			}
 		}
 	});

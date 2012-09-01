@@ -13,9 +13,11 @@ som.train('english-2', {'hello': 4, 'hola': 0, 'ciao': 1});
 
 console.log('start', +new Date());
 
-som.train('english-3', {'hello': 5, 'hola': 0, 'ciao': 0});
+som.train('english-3', {'hello': 5, 'hola': 0});
 
 console.log('end', +new Date());
 
-console.log(util.inspect(som.neighbors('english-1', 2), false, 8));
+console.log('SOM', util.inspect(som, false, 8));
+
+console.log('NEIGHBORS', util.inspect(som.neighbors('english-1', 2), false, 8));
 
