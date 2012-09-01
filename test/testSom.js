@@ -18,6 +18,6 @@ som.train('english-3', {'hello': 5, 'hola': 0});
 console.log('end', +new Date());
 
 console.log('SOM', util.inspect(som, false, 8));
-
+console.log('INDEX', util.inspect(som.traineeIndex, false, 8));
 console.log('NEIGHBORS', util.inspect(som.neighbors('english-1', 2), false, 8));
 

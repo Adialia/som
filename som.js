@@ -23,7 +23,8 @@ var Som = function(_config)
 			}
 		}
 
-		return Math.sqrt(distance);
+		//return Math.sqrt(distance);
+		distance;
 	};
 
 	var max = function (_a, _b)
@@ -104,7 +105,7 @@ Som.prototype.neighbors = function(_id, _radius)
 			{
 				var distance = that.distanceFunction(_node.weights, bestMatchingNode.weights);
 
-				if (distance < _radius)
+				if (distance < (_radius * _radius))
 				{
 					neighbors.push({distance: distance, neighbors: _node.neighbors});
 				}
@@ -159,11 +160,11 @@ Som.prototype.train = function(_id, _vector)
 	{
 		var distance = that.distanceFunction(bestMatchingNode.weights, _node.weights);
 
-		if (distance < radius)
+		if (distance < (radius * radius))
 		{
 			//adjust weights for this _node
 
-			var influence = Math.exp(-(distance/(2 * radius)));
+			var influence = Math.exp(-(distance/(2 * (radius * radius))));
 
 			if (influence <= 0) { influence = 1; }
 
@@ -206,7 +207,7 @@ Som.prototype.init = function(_config)
 		//We want to reduce to probability of a vector collision to
 		//close to zero ... this allows us to avoid checking the node
 		//list for duplicates.  This becomes more effective as the
-		//featue count increases.
+		//feature count increases.
 
 		var precision = Math.pow(10, _precision)|| Math.pow(10, (Math.ceil(Math.log(_somSize)/Math.LN10) + 2));
 		
@@ -232,7 +233,7 @@ Som.prototype.init = function(_config)
 		
 		for (var i = 0; i < somSize; i++)
 		{
-			var node = randomize(_config.features, somSize);
+			var node = randomize(_config.features, somSize, _config.precision);
 
 			node.x = row;
 			node.y = column;
