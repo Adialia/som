@@ -82,6 +82,12 @@ Som.prototype.neighbors = function(_id, _radius)
 	var neighbors = [];
 
 	var bestMatchingNode = this.traineeIndex[_id];
+
+	if (!bestMatchingNode)
+	{
+		throw Error('Unable to find node for id:' + _id);
+	}
+	
 	var that = this;
 	
 	if (!_radius)

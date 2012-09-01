@@ -1,5 +1,5 @@
 console.log('create som', +new Date());
-var som = require('../som').create({iterationCount: 5, width: 10, height: 10});
+var som = require('som').create({iterationCount: 5, width: 10, height: 10});
 console.log('end create som', +new Date());
 
 var util = require('util');
