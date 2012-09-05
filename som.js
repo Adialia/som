@@ -21,7 +21,7 @@ var Som = function(_config)
 
 		if (_vector2.length > _vector1.length)
 		{
-			for (var i = _vector1.length, length = (_vector2.length - _vector1.length), i < length; i++)
+			for (var i = _vector1.length, length = (_vector2.length - _vector1.length); i < length; i++)
 			{
 				distance += Math.pow(_vector2[item], 2);
 			}
