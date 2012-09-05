@@ -2,22 +2,26 @@ var _ = require('underscore');
 
 var Som = function(_config)
 {
+	var that = this;
 	var config = _config ||{};
 	
 	var euclideanDistance = function(_vector1, _vector2)
 	{
 		var distance = 0;
-		var processedItems = {};
 		
-		for (var item in _vector1)
+		for (var i = 0, length = _vector1.length; i < length; i++)
 		{
-			distance += Math.pow((_vector1[item] - _vector2[item]), 2);
-			processedItems[item] = 1;
+			var value1 = 0, value2 = 0;
+
+			if (_vector1[i] !== null && _vector1[i] !== undefined) { value1 = _vector1[i]; }
+			if (_vector2[i] !== null && _vector2[i] !== undefined) { value2 = _vector2[i]; }
+			
+			distance += Math.pow((value1 - value2), 2);
 		}
 
-		for (var item in _vector2)
+		if (_vector2.length > _vector1.length)
 		{
-			if (!processedItems[item])
+			for (var i = _vector1.length, length = (_vector2.length - _vector1.length), i < length; i++)
 			{
 				distance += Math.pow(_vector2[item], 2);
 			}
@@ -39,6 +43,20 @@ var Som = function(_config)
 	this.initialRadius = config.initialRadius || max(this.width, this.height)/2;
 	this.iterationCount = config.iterationCount;
 	this.initialLearningRate = config.initialLearningRate||0.1;
+
+	this.features = {};
+
+	if (!config.features || config.features.length === 0)
+	{
+		throw Error('Provide the list of features for the vectors.');
+	}
+	else
+	{
+		config.features.forEach(_function(_feature, _index)
+		{
+			that.features[_feature] = _index;
+		});
+	}
 	
 	this.currentIteration = 1;
 
@@ -70,7 +88,7 @@ Node.prototype.add = function(_id, _vector, _category)
 {
 	var category = _category||'default';
 	this.neighbors[category] = this.neighbors[category]||[]; 
-	this.neighbors[category].push({id: _id, category: category, vector: _vector});
+	this.neighbors[category].push({id: _id});
 };
 
 Som.prototype.index = function(_id, _node)
@@ -168,10 +186,11 @@ Som.prototype.train = function(_id, _vector)
 
 			if (influence <= 0) { influence = 1; }
 
-			for (var feature in _node.weights)
+			for (var feature in that.features)
 			{
+				var featureIndex = that.features[feature];
 				var vectorFeature = _vector[feature]||0;
-				_node.weights[feature] = _node.weights[feature] + (influence * learningRate * (vectorFeature - _node.weights[feature]));
+				_node.weights[featureIndex] = _node.weights[featureIndex] + (influence * learningRate * (vectorFeature - _node.weights[featureIndex]));
 			}
 		}
 	});
@@ -185,7 +204,14 @@ Som.prototype.bestMatchingUnit = function(_vector)
 	
 	this.nodeList.forEach(function(_node)
 	{
-		var distance = that.distanceFunction(_node.weights, _vector);
+		var weights = [];
+		
+		for (var feature in _vector)
+		{
+			weights[that.features[feature]] = _vector[feature];
+		}
+		
+		var distance = that.distanceFunction(_node.weights, weights);
 
 		if (distance < smallestDistance)
 		{
@@ -211,12 +237,12 @@ Som.prototype.init = function(_config)
 
 		var precision = Math.pow(10, _precision)|| Math.pow(10, (Math.ceil(Math.log(_somSize)/Math.LN10) + 2));
 		
-		var vector = {};
-		
-		for (var i = 0, length = _features.length; i < length; i++)
+		var vector = [];
+
+		for (feature in _features)
 		{
-			var feature = _features[i];
-			vector[feature] = Math.round(Math.random() * precision)/precision;
+			var featureIndex = _features[feature];
+			vector[featureIndex] = Math.round(Math.random() * precision)/precision;
 		}
 
 		return new Node({weights: vector});
@@ -226,14 +252,14 @@ Som.prototype.init = function(_config)
 	{
 		this.nodeList = _config.nodeList;
 	}
-	else if (_config.features && _config.features.length > 0)
+	else
 	{
 		var row = 0;
 		var column = 0;
 		
 		for (var i = 0; i < somSize; i++)
 		{
-			var node = randomize(_config.features, somSize, _config.precision);
+			var node = randomize(this.features, somSize, _config.precision);
 
 			node.x = row;
 			node.y = column;
