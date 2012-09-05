@@ -272,10 +272,6 @@ Som.prototype.init = function(_config)
 			this.nodeList.push(node);
 		}
 	}
-	else
-	{
-		throw Error('Provide either a non empty list of initialized nodes { nodes: [] }, or provide a non empty list of weight features { features: [] } for random node creation');
-	}
 };
 
 exports.create = function (_config)
