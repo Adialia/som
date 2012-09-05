@@ -52,7 +52,7 @@ var Som = function(_config)
 	}
 	else
 	{
-		config.features.forEach(_function(_feature, _index)
+		config.features.forEach(function(_feature, _index)
 		{
 			that.features[_feature] = _index;
 		});
