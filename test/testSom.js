@@ -1,10 +1,10 @@
 console.log('create som', +new Date());
-var som = require('som').create({iterationCount: 5, width: 10, height: 10});
+var som = require('som').create({features:  ['hello', 'hola', 'ciao'], iterationCount: 5, width: 10, height: 10});
 console.log('end create som', +new Date());
 
 var util = require('util');
 
-som.init({features: ['hello', 'hola', 'ciao']});
+som.init({});
 
 som.train('english-1', {'hello': 1, 'hola': 0, 'ciao': 0});
 som.train('spanish-1', {'hello': 0, 'hola': 1, 'ciao': 0});

@@ -226,6 +226,7 @@ Som.prototype.bestMatchingUnit = function(_vector)
 
 Som.prototype.init = function(_config)
 {
+	var config = _config||{};
 	var somSize = this.width * this.height;
 
 	var randomize = function(_features, _somSize, _precision)
@@ -248,9 +249,9 @@ Som.prototype.init = function(_config)
 		return new Node({weights: vector});
 	};
 	
-	if (_config.nodes && _config.nodes.length === somSize)
+	if (config.nodes && config.nodes.length === somSize)
 	{
-		this.nodeList = _config.nodeList;
+		this.nodeList = config.nodeList;
 	}
 	else
 	{
@@ -259,7 +260,7 @@ Som.prototype.init = function(_config)
 		
 		for (var i = 0; i < somSize; i++)
 		{
-			var node = randomize(this.features, somSize, _config.precision);
+			var node = randomize(this.features, somSize, config.precision);
 
 			node.x = row;
 			node.y = column;
