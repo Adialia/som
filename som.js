@@ -79,8 +79,6 @@ var Node = function(_config)
 
 	this.weights = _config.weights;
 	
-	this.x = _config.x;
-	this.y = _config.y;
 	this.i = _config.i;
 };
 
@@ -91,10 +89,22 @@ Node.prototype.add = function(_id, _vector, _category)
 	this.neighbors[category].push({id: _id});
 };
 
+Som.prototype.prepareNode = function(_features, _vector)
+{
+	var weights = [];
+
+	_features.forEach(function(_feature)
+	{
+		weights.push(_vector[_feature]);
+	});
+	
+	return new Node({weights: weights});
+};
+
 Som.prototype.index = function(_id, _node)
 {
 	this.traineeIndex[_id] = _node;
-}
+};
 
 Som.prototype.neighbors = function(_id, _radius)
 {
