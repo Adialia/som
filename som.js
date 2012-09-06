@@ -95,7 +95,14 @@ Som.prototype.prepareNode = function(_features, _vector)
 
 	_features.forEach(function(_feature)
 	{
-		weights.push(_vector[_feature]);
+		var value = _vector[_feature];
+
+		if (value === undefined || value === null)
+		{
+			value = 0;
+		}
+		
+		weights.push(value);
 	});
 	
 	return new Node({weights: weights});
