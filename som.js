@@ -27,8 +27,7 @@ var Som = function(_config)
 			}
 		}
 
-		//return Math.sqrt(distance);
-		return distance;
+		return Math.sqrt(distance);
 	};
 
 	var max = function (_a, _b)
@@ -140,7 +139,7 @@ Som.prototype.neighbors = function(_id, _radius)
 			{
 				var distance = that.distanceFunction(_node.weights, bestMatchingNode.weights);
 
-				if (distance < (_radius * _radius))
+				if (distance < _radius)
 				{
 					neighbors.push({distance: distance, neighbors: _node.neighbors});
 				}
@@ -195,11 +194,11 @@ Som.prototype.train = function(_id, _vector)
 	{
 		var distance = that.distanceFunction(bestMatchingNode.weights, _node.weights);
 
-		if (distance < (radius * radius))
+		if (distance < radius)
 		{
 			//adjust weights for this _node
 
-			var influence = Math.exp(-(distance/(2 * (radius * radius))));
+			var influence = Math.exp(-(distance/2 * radius));
 
 			if (influence <= 0) { influence = 1; }
 
