@@ -139,7 +139,7 @@ Som.prototype.neighbors = function(_id, _radius)
 			{
 				var distance = that.distanceFunction(_node.weights, bestMatchingNode.weights);
 
-				if (distance < _radius)
+				if (distance <= _radius)
 				{
 					neighbors.push({distance: distance, neighbors: _node.neighbors});
 				}
@@ -245,7 +245,7 @@ Som.prototype.init = function(_config)
 	var config = _config||{};
 	var somSize = this.width * this.height;
 
-	var randomize = function(_features, _somSize, _precision)
+	var randomize = function(_features, _somSize, _scale, _precision)
 	{
 		//We want to reduce to probability of a vector collision to
 		//close to zero ... this allows us to avoid checking the node
@@ -253,13 +253,14 @@ Som.prototype.init = function(_config)
 		//feature count increases.
 
 		var precision = Math.pow(10, _precision)|| Math.pow(10, (Math.ceil(Math.log(_somSize)/Math.LN10) + 2));
+		var scale = _scale||1;
 		
 		var vector = [];
 
 		for (feature in _features)
 		{
 			var featureIndex = _features[feature];
-			vector[featureIndex] = Math.round(Math.random() * precision)/precision;
+			vector[featureIndex] = Math.round(Math.random() * precision)/precision/scale;
 		}
 
 		return new Node({weights: vector});
@@ -276,7 +277,7 @@ Som.prototype.init = function(_config)
 		
 		for (var i = 0; i < somSize; i++)
 		{
-			var node = randomize(this.features, somSize, config.precision);
+			var node = randomize(this.features, somSize, config.scale, config.precision);
 
 			node.x = row;
 			node.y = column;
