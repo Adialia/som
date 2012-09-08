@@ -260,7 +260,7 @@ Som.prototype.init = function(_config)
 		for (feature in _features)
 		{
 			var featureIndex = _features[feature];
-			vector[featureIndex] = Math.round(Math.random() * precision)/precision/scale;
+			vector[featureIndex] = Math.round(Math.random() * precision)/precision * scale;
 		}
 
 		return new Node({weights: vector});
