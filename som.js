@@ -229,7 +229,7 @@ Som.prototype.bestMatchingUnit = function(_vector)
 		
 		for (var feature in _vector)
 		{
-			weights[that.features[feature]] = _vector[feature];
+			weights[that.features[feature]] = _vector[feature]||0;
 		}
 		
 		var distance = that.distanceFunction(_node.weights, weights);
