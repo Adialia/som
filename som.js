@@ -101,6 +101,10 @@ Som.prototype.prepareNode = function(_features, _vector)
 			console.log('assigning 0 to the value');
 			value = 0;
 		}
+		else
+		{
+			console.log('assigning', value, 'to the value');
+		}
 		
 		weights.push(value);
 	});
