@@ -98,6 +98,7 @@ Som.prototype.prepareNode = function(_features, _vector)
 
 		if (value === undefined || value === null)
 		{
+			console.log('assigning 0 to the value');
 			value = 0;
 		}
 		
