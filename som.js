@@ -121,6 +121,7 @@ Som.prototype.index = function(_id, _node)
 
 Som.prototype.neighbors = function(_id, _radius)
 {
+	var that = this;
 	var neighbors = [];
 
 	var bestMatchingNode = this.traineeIndex[_id];
@@ -134,15 +135,13 @@ Som.prototype.neighbors = function(_id, _radius)
 	{
 		var vector = {};
 
-		for (var i = 0, length = _features.length; i < length; i++)
+		for (var feature in _features)
 		{
-			vector[_features[i]] = _weights[i];
+			vector[feature] = _weights[_features[feature]];
 		}
 		
 		return vector;
 	};
-	
-	var that = this;
 	
 	if (!_radius)
 	{
@@ -162,7 +161,7 @@ Som.prototype.neighbors = function(_id, _radius)
 
 				if (distance <= _radius)
 				{
-					var vector = createVector(this.features, bestMatchingNode.weights);
+					var vector = createVector(this.features, _node.weights);
 					neighbors.push({distance: distance, x: _node.x, y: _node.y, i: _node.i, vector: vector, neighbors: _node.neighbors});
 				}
 			}
