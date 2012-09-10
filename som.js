@@ -79,6 +79,8 @@ var Node = function(_config)
 	this.weights = _config.weights;
 	
 	this.i = _config.i;
+	this.x = _config.x;
+	this.y = _config.y;
 };
 
 Node.prototype.add = function(_id, _vector, _category)
@@ -173,13 +175,8 @@ Som.prototype.train = function(_id, _vector)
 
 	var determineLocalRadius = function(_iteration)
 	{
-		var max = function (_a, _b)
-		{
-			return (_a > _b) ? _a : _b;
-		};
-
 		var timeConstant = that.iterationCount/Math.log(that.initialRadius);
-
+		
 		return that.initialRadius * Math.exp(-(_iteration/timeConstant));
 	};
 
@@ -197,7 +194,7 @@ Som.prototype.train = function(_id, _vector)
 	
 	this.nodeList.forEach(function(_node)
 	{
-		var distance = that.distanceFunction(bestMatchingNode.weights, _node.weights);
+		var distance = that.distanceFunction([bestMatchingNode.x, bestMatchingNode.y], [_node.x, _node.y]);
 
 		if (distance < radius)
 		{
