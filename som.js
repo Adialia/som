@@ -161,7 +161,7 @@ Som.prototype.neighbors = function(_id, _radius)
 
 				if (distance <= _radius)
 				{
-					var vector = createVector(this.features, _node.weights);
+					var vector = createVector(that.features, _node.weights);
 					neighbors.push({distance: distance, x: _node.x, y: _node.y, i: _node.i, vector: vector, neighbors: _node.neighbors});
 				}
 			}
