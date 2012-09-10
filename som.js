@@ -129,15 +129,29 @@ Som.prototype.neighbors = function(_id, _radius)
 	{
 		throw Error('Unable to find node for id:' + _id);
 	}
+
+	var createVector = function(_features, _weights)
+	{
+		var vector = {};
+
+		for (var i = 0, length = _features.length; i < length; i++)
+		{
+			vector[_features[i]] = _weights[i];
+		}
+		
+		return vector;
+	};
 	
 	var that = this;
 	
 	if (!_radius)
 	{
-		neighbors.push({distance: 0, x: bestMatchingNode.x, y: bestMatchingNode.y, i: bestMatchingNode.i, neighbors: bestMatchingNode.neighbors});
+		var vector = createVector(this.features, bestMatchingNode.weights);		
+		neighbors.push({distance: 0, x: bestMatchingNode.x, y: bestMatchingNode.y, i: bestMatchingNode.i, vector: vector, neighbors: bestMatchingNode.neighbors});
 	}
 	else
 	{
+		
 		//run through all the nodes and find the neighbors per node
 		//within the given radius ...
 		this.nodeList.forEach(function(_node)
@@ -148,7 +162,8 @@ Som.prototype.neighbors = function(_id, _radius)
 
 				if (distance <= _radius)
 				{
-					neighbors.push({distance: distance, x: _node.x, y: _node.y, i: _node.i, neighbors: _node.neighbors});
+					var vector = createVector(this.features, bestMatchingNode.weights);
+					neighbors.push({distance: distance, x: _node.x, y: _node.y, i: _node.i, vector: vector, neighbors: _node.neighbors});
 				}
 			}
 		});
