@@ -148,7 +148,7 @@ Som.prototype.neighbors = function(_id, _radius)
 
 				if (distance <= _radius)
 				{
-					neighbors.push({distance: distance, x: bestMatchingNode.x, y: bestMatchingNode.y, i: bestMatchingNode.i, neighbors: _node.neighbors});
+					neighbors.push({distance: distance, x: _node.x, y: _node.y, i: _node.i, neighbors: _node.neighbors});
 				}
 			}
 		});
