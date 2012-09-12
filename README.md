@@ -9,7 +9,7 @@ npm install som
 
 ## Example
 
-'''
+```
 //Create a SOM of four (width X height) nodes.  It will expect five items to be submitted for training.
 var som = require('som').create({features:  ['hello', 'hola', 'ciao'], iterationCount: 5, width: 2, height: 2});
 var util = require('util');
@@ -32,4 +32,4 @@ console.log('INDEX', util.inspect(som.traineeIndex, false, 8));
 
 //Perform a SOM neigborhood search of distance 2 from the node that holds the value 'english-1'.
 console.log('NEIGHBORS', util.inspect(som.neighbors('english-1', 2), false, 8));
-'''
+```
