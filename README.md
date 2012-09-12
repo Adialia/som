@@ -31,5 +31,6 @@ console.log('SOM', util.inspect(som, false, 8));
 console.log('INDEX', util.inspect(som.traineeIndex, false, 8));
 
 //Perform a SOM neigborhood search of distance 2 from the node that holds the value 'english-1'.
-console.log('NEIGHBORS', util.inspect(som.neighbors('english-1', 2), false, 8));
+var neighbors = som.neighbors('english-1', 2);
+console.log('NEIGHBORS', util.inspect(neighbors, false, 8));
 ```
